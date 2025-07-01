@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress podstawówki</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Progress podstawówki</h1>
+            <p class="subtitle">Plik CSV jest dostępny do pobrania w oknie z lotami w systemie AP.</p>
+        </header>
+
+        <div class="file-selector">
+            <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+            <button id="uploadButton">📁 Wybierz plik CSV</button>
+            <span id="fileNameLabel">Nie wybrano pliku.</span>
+        </div>
+
+        <div id="reportContainer" class="report-container">
+            <div class="placeholder">
+                <p>Progress.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
