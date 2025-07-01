@@ -34,7 +34,7 @@ function handleFileSelect(event) {
             const pilotData = analyzeFlightData(e.target.result);
             displayReport(pilotData);
         } catch (error) {
-            console.error("Błąd wczytywania pliku:", error);
+            console.error("Error processing file:", error);
             displayError(error.message);
         }
     };
@@ -113,7 +113,17 @@ function displayReport(pilotData) {
 
             const label = document.createElement('span');
             label.className = 'requirement-label';
-            const labelText = reqKey.replace(/_/g, ' ').replace(' minutes', '').replace(/\b\w/g, l => l.toUpperCase());
+            
+            let labelText;
+            if (reqKey === 'duo_flights') {
+                labelText = 'Z Instruktorem';
+            } else if (reqKey === 'solo_flights') {
+                labelText = 'Solo';
+            } else if (reqKey === 'duo_time_minutes') {
+                labelText = 'Czas z Instruktorem';
+            } else if (reqKey === 'solo_time_minutes') {
+                labelText = 'Czas Solo';
+            }
 
             if (isTime) {
                 label.textContent = `${statusIcon} ${labelText}: ${formatMinutesToHHMM(actualValue)} / ${formatMinutesToHHMM(requiredValue)}`;
