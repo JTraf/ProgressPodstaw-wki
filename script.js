@@ -31,8 +31,13 @@ function handleFileSelect(event) {
     const reader = new FileReader();
     reader.onload = (e) => {
         try {
-            const pilotData = analyzeFlightData(e.target.result);
-            displayReport(pilotData);
+            const { pilotData, pilotName, error } = analyzeFlightData(e.target.result);
+            if (error) {
+                displayError(error);
+            } else {
+                document.getElementById('pilotNameHeader').textContent = `Pilot: ${pilotName}`;
+                displayReport(pilotData);
+            }
         } catch (error) {
             console.error("Error processing file:", error);
             displayError(error.message);
@@ -43,11 +48,20 @@ function handleFileSelect(event) {
 
 function analyzeFlightData(csvText) {
     const lines = csvText.split('\n').filter(line => line.trim() !== '');
+    if (lines.length <= 1) {
+        return { error: "CSV file is empty or has no data rows." };
+    }
+    
     const pilotSummary = {};
+    let pilotName = null;
 
     for (let i = 1; i < lines.length; i++) {
         const columns = lines[i].split(';');
         if (columns.length < 16) continue;
+
+        if (!pilotName) {
+            pilotName = columns[5]?.trim() || 'Unknown';
+        }
 
         const taskZad = columns[8]?.trim() || '';
         const taskCw = columns[9]?.trim() || '';
@@ -77,7 +91,7 @@ function analyzeFlightData(csvText) {
             }
         });
     }
-    return pilotSummary;
+    return { pilotData: pilotSummary, pilotName: pilotName, error: null };
 }
 
 function displayReport(pilotData) {
@@ -147,6 +161,7 @@ function displayReport(pilotData) {
 
 function displayError(message) {
     const container = document.getElementById('reportContainer');
+    document.getElementById('pilotNameHeader').textContent = '';
     container.innerHTML = '';
     const errorDiv = document.createElement('div');
     errorDiv.className = 'placeholder';

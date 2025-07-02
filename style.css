@@ -18,7 +18,7 @@ body {
 header {
     text-align: center;
     border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
@@ -30,6 +30,16 @@ h1 {
 .subtitle {
     color: #66727f;
     font-size: 1rem;
+    margin-top: 0;
+}
+
+.pilot-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0056b3;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    height: 20px;
 }
 
 .file-selector {
