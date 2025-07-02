@@ -25,7 +25,18 @@ const trainingRequirements = {
 
 function handleFileSelect(event) {
     const file = event.target.files[0];
-    if (!file) return;
+    const fileInput = document.getElementById('csvFileInput');
+
+    if (!file) {
+        return;
+    }
+
+    if (!file.name.toLowerCase().endsWith('.csv')) {
+        displayError("Invalid file type. Please select a .csv file.");
+        document.getElementById('fileNameLabel').textContent = "Incorrect file type selected.";
+        fileInput.value = ''; 
+        return;
+    }
 
     document.getElementById('fileNameLabel').textContent = file.name;
     const reader = new FileReader();
